@@ -7,11 +7,9 @@ var parser = function (ast, validate) {
   if (!validate) {
     return ast.value
   }
-
   if(!options.validate(ast.value)) {
     throw new GraphQLError(options.error, [ast]);
   }
-
   return ast.value;
 }
 
