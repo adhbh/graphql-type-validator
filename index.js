@@ -3,13 +3,14 @@ var GraphQLScalarType = require('graphql').GraphQLScalarType
 var GraphQLError = require('graphql/error').GraphQLError
 var Kind = require('graphql/language').Kind
 
-var parser = function (ast, validate) {
-  if (!validate) {
+var parser = function (ast, options) {
+  if (!options.validate) {
     return ast.value
   }
   if(!options.validate(ast.value)) {
     throw new GraphQLError(options.error, [ast]);
   }
+
   return ast.value;
 }
 
@@ -18,6 +19,8 @@ module.exports = function (options) {
     name: options.name,
     description: options.description,
     serialize: function (value) {
+      var error = options.error || 'Invalid field'
+      assertErr(options.validate(value), TypeError, 'Field error: ' + error)
       return value
     },
     parseValue: function (value) {

@@ -8,7 +8,7 @@ Example:
 import graphqlValidator from 'graphql-type-validator'
 
 const GraphQLPrimitiveType = graphqlValidator({
-	name: 'StringOrNumber'
+	name: 'StringOrNumber',
 	validate: function(value) {
 		return typeof value === 'string' || typeof value === 'number'
 	},
